@@ -1,1 +1,1 @@
-# snake-same
+# snake-game
