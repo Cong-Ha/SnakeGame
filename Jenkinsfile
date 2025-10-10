@@ -5,6 +5,7 @@ pipeline {
         NODE_VERSION = '18'
         DOCKER_IMAGE_NAME = 'uzomaki/snake-game'
         DOCKER_TAG = "${env.BUILD_NUMBER}"
+        DOCKERHUB_CREDENTIALS_ID = 'docker_id'
         DOCKERHUB_CREDENTIALS = credentials('docker_id')
         DOCKERHUB_URL = 'https://registry.hub.docker.com'
     }
@@ -34,10 +35,11 @@ pipeline {
         }
         
         stage('Push Docker Image to Docker Hub') {
+            agent {label 'App-Server'}
             steps {
                 script {
                     echo "Pushing Docker image ${DOCKER_IMAGE_NAME}:latest to Docker Hub..."
-                    docker.withRegistry(env.DOCKERHUB_URL, env.DOCKERHUB_CREDENTIALS) {
+                    docker.withRegistry(env.DOCKERHUB_URL, "${env.DOCKERHUB_CREDENTIALS_ID}") {
                         app.push("latest")
                         app.push("${env.BUILD_NUMBER}")
                     }
