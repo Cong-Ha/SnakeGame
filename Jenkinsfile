@@ -5,7 +5,7 @@ pipeline {
         NODE_VERSION = '18'
         DOCKER_IMAGE_NAME = 'uzomaki/snake-game'
         DOCKER_TAG = "${env.BUILD_NUMBER}"
-        DOCKERHUB_CREDENTIALS = 'docker-id'
+        DOCKERHUB_CREDENTIALS = credentials('docker-id')
         DOCKERHUB_URL = 'https://registry.hub.docker.com'
     }
     
@@ -22,10 +22,8 @@ pipeline {
             }
         }
 
-        stage('BUILD-AND-TAG'){
-            {
-                agent {label 'App-Server'}
-            }
+        stage('BUILD-AND-TAG') {
+            agent {label 'App-Server'}
             steps {
                 script {
                     echo "Building Docker image ${DOCKER_IMAGE_NAME}..."
@@ -39,15 +37,16 @@ pipeline {
             steps {
                 script {
                     echo "Pushing Docker image ${DOCKER_IMAGE_NAME}:latest to Docker Hub..."
-                    docker.withRegistry(env.DOCKERHUB_URL, env.DOCKERHUB_CREDENTIALS)
+                    docker.withRegistry(env.DOCKERHUB_URL, env.DOCKERHUB_CREDENTIALS) {
+                        app.push("latest")
+                        app.push("${env.BUILD_NUMBER}")
+                    }
                 }
             }
         }
         
         stage('Deployment') {
-            {
-                agent {label 'App-Server'}
-            }
+            agent {label 'App-Server'}
             steps{
                 echo "Starting deployment using docker-compose..."
                 script{
@@ -62,6 +61,7 @@ pipeline {
                 echo 'Deployment completed successfully'
             }
         }
+    }
     
     post {
         success {
