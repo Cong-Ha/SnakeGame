@@ -4,7 +4,7 @@ services:
   snake-game:
     image: uzomaki/snake-game:latest
     build: .
-    container_name: snake-game-app
+    container_name: snake-game-app_via_jenkinsfile
     ports:
       - "5000:3000"
     environment:
