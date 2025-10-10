@@ -6,7 +6,7 @@ services:
     build: .
     container_name: snake-game-app
     ports:
-      - "3000:3000"
+      - "5000:3000"
     environment:
       - NODE_ENV=production
       - PORT=3000

@@ -65,7 +65,7 @@ pipeline {
     
     post {
         success {
-            echo 'Pipeline succeeded! Application is running on port 172.232.3.70:3000'
+            echo 'Pipeline succeeded! Application is running on port 172.232.3.70:5000'
         }
         failure {
             echo 'Pipeline failed!'
