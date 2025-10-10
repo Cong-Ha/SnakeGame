@@ -5,7 +5,7 @@ pipeline {
         NODE_VERSION = '18'
         DOCKER_IMAGE_NAME = 'uzomaki/snake-game'
         DOCKER_TAG = "${env.BUILD_NUMBER}"
-        DOCKERHUB_CREDENTIALS = credentials('docker-id')
+        DOCKERHUB_CREDENTIALS = credentials('docker_id')
         DOCKERHUB_URL = 'https://registry.hub.docker.com'
     }
     
