@@ -71,7 +71,7 @@ pipeline {
             echo 'Pipeline failed!'
         }
         always {
-            sh 'docker-compose logs || true'
+            echo 'Pipeline execution completed'
         }
     }
 }
