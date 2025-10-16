@@ -18,8 +18,15 @@ pipeline {
         }
 
         stage('Static Security Scan') {
+            agent {label 'App-Server'}
             steps {
-                sh 'echo running static security scan'
+                script {
+                    snykSecurity(
+                        snykInstallation: 'Snyk-installations',
+                        snyTokenId: 'snyk_token',
+                        severity: 'critical'
+                    )
+                }
             }
         }
 
