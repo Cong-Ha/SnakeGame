@@ -34,7 +34,7 @@ pipeline {
             agent {label 'App-Server'}
             steps {
                 script {
-                    def scannerHome = tool 'SonarQube'
+                    def scannerHome = tool 'SonarQube-Scanner'
                     withSonarQubeEnv('sonarqube') {
                         sh "${scannerHome}/bin/sonar-scanner \
                             -Dsonar.projectKey=gameapp \
